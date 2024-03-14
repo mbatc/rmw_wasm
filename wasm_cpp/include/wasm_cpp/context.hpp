@@ -49,7 +49,7 @@ namespace wasm_cpp
 
             // TODO: wasm objects
 
-            // Push a message registered subscribers
+            // Push a message to registered subscribers
             bool push_message_to_subscribers(const std::string &topic, const std::string &message);
 
             // Register a subscriber with the context.
