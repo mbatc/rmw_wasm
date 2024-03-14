@@ -3,6 +3,9 @@
 
 #include <string>
 #include <optional>
+#include <queue>
+#include <vector>
+#include <functional>
 
 #include "wasm_cpp/visibility_control.hpp"
 #include "wasm_cpp/participant.hpp"
@@ -23,8 +26,20 @@ namespace wasm_cpp
 
             // WASM_CPP_PUBLIC std::optional<std::pair<std::string, MessageInfo>> get_message_info();
 
-            // TODO: add more funs when needed
+            WASM_CPP_PUBLIC void push_message(const std::string & message);
 
+            WASM_CPP_PUBLIC bool has_message() const;
+
+            WASM_CPP_PUBLIC int64_t add_message_cb(std::function<void()> cb);
+
+            WASM_CPP_PUBLIC void remove_message_cb(int64_t id);
+
+            // TODO: add more funs when needed
+        private:
+            mutable std::mutex      m_lock;
+            std::queue<std::string> m_messages;
+
+            std::vector<std::pair<int64_t, std::function<void()>>> m_message_cb;
     };
 
 } // namespace wasm_cpp
